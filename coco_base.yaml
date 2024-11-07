@@ -121,6 +121,7 @@ lightning:
           unconditional_guidance_label: [""]
 
   trainer:
+    precision: 16 # Enabled mixed precision
     benchmark: True
     num_sanity_val_steps: 0
     accumulate_grad_batches: 1
