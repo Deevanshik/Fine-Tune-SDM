@@ -9,7 +9,7 @@ TRANSFORMS.register_module(module=RandomGTCrop)
 TRANSFORMS.register_module(module=PackDetInputs)
 
 class CocoDatasetGTCrop(CocoDataset):
-    def __init__(self, ann_file='/kaggle/input/annotation-file/pytorch/default/1/instances_train2017_seen.json', img_prefix='/kaggle/input/coco-2017-dataset/coco2017/train2017', \
+    def __init__(self, ann_file='/kaggle/input/annotation-file/instances_train2017_seen.json', img_prefix='/kaggle/input/coco-2017-dataset/coco2017/train2017', \
                  crop_size=512, random_gt=3, num_imgs=-1, name_mapping_file=None, return_gt=False):
         pipeline = [
             dict(type='LoadImageFromFile'),
@@ -24,7 +24,7 @@ class CocoDatasetGTCrop(CocoDataset):
             dict(type='Pad', size_divisor=crop_size),
             dict(type='PackDetInputs')
         ]
-        super(CocoDatasetGTCrop, self).__init__(ann_file=ann_file, pipeline=pipeline, data_prefix=dict(img=img_prefix))
+        super(CocoDatasetGTCrop, self).__init__(ann_file='/kaggle/input/annotation-file/instances_train2017_seen.json', pipeline=pipeline, data_prefix=dict(img='/kaggle/input/coco-2017-dataset/coco2017/train2017'))
 
         # for quick test
         if num_imgs > 0:
