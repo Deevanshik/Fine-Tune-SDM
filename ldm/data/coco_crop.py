@@ -24,7 +24,7 @@ class CocoDatasetGTCrop(CocoDataset):
             dict(type='Pad', size_divisor=crop_size),
             dict(type='PackDetInputs')
         ]
-        super(CocoDatasetGTCrop, self).__init__(ann_file='/kaggle/input/annotation-file/instances_train2017_seen.json', pipeline=pipeline, data_prefix=dict(img=img_prefix))
+        super(CocoDatasetGTCrop, self).__init__(ann_file='/kaggle/input/annotation-file/instances_train2017_seen.json', pipeline=pipeline, data_prefix=dict(img='/kaggle/input/coco-2017-dataset/coco2017/train2017'))
 
         # for quick test
         if num_imgs > 0:
