@@ -6,10 +6,10 @@ model:
     linear_end: 0.0120
     num_timesteps_cond: 1
     log_every_t: 200
-    timesteps: 500
+    timesteps: 1000
     first_stage_key: "image"
     cond_stage_key: "txt"
-    image_size: 32
+    image_size: 64
     channels: 4
     cond_stage_trainable: false   # Note: different from the one we trained before
     conditioning_key: crossattn
@@ -30,9 +30,9 @@ model:
         image_size: 32 # unused
         in_channels: 4
         out_channels: 4
-        model_channels: 160
+        model_channels: 320
         attention_resolutions: [ 4, 2, 1 ]
-        num_res_blocks: 1
+        num_res_blocks: 2
         channel_mult: [ 1, 2, 4, 4 ]
         num_heads: 8
         use_spatial_transformer: True
@@ -72,21 +72,21 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 4  # instagen: 16
-    num_workers: 2
+    batch_size: 8  # instagen: 16
+    num_workers: 4
     num_val_workers: 0 # Avoid a weird val dataloader issue
     train:
       target: ldm.data.coco_crop.CocoDatasetGTCrop
       params:
         ann_file: 'mmdetection/data/coco/annotations/instances_train2017_seen.json'
-        img_prefix: '/kaggle/input/coco-2017-dataset/coco2017/train2017'
+        img_prefix: 'mmdetection/data/coco/train2017'
         crop_size: 512
         random_gt: 3
     validation:
       target: ldm.data.coco_crop.CocoDatasetGTCrop
       params:
-        ann_file: '/kaggle/input/coco-2017-dataset/coco2017/annotations/instances_val2017.json'
-        img_prefix: '/kaggle/input/coco-2017-dataset/coco2017/val2017'
+        ann_file: 'mmdetection/data/coco/annotations/instances_val2017.json'
+        img_prefix: 'mmdetection/data/coco/val2017'
         crop_size: 512
         random_gt: 3
         num_imgs: 5
@@ -106,7 +106,7 @@ lightning:
     image_logger:
       target: main.ImageLogger
       params:
-        batch_frequency: 500 # 200
+        batch_frequency: 100 # 200
         max_images: 4
         increase_log_steps: False
         log_first_step: True
