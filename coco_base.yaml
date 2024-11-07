@@ -30,7 +30,7 @@ model:
         image_size: 32 # unused
         in_channels: 4
         out_channels: 4
-        model_channels: 160
+        model_channels: 320
         attention_resolutions: [ 4, 2, 1 ]
         num_res_blocks: 2
         channel_mult: [ 1, 2, 4, 4 ]
@@ -72,7 +72,7 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 2 # instagen: 16
+    batch_size: 4 # instagen: 16
     num_workers: 2
     num_val_workers: 0 # Avoid a weird val dataloader issue
     train:
@@ -121,6 +121,7 @@ lightning:
           unconditional_guidance_label: [""]
 
   trainer:
+    precision: 16 # Enabled mixed precision
     benchmark: True
     num_sanity_val_steps: 0
     accumulate_grad_batches: 1
