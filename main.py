@@ -595,7 +595,10 @@ if __name__ == "__main__":
     #               key: value
 
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
-
+    ###########################################################
+    print("Memory usage before loading the model:")
+    print(torch.cuda.memory_summary())
+    ###########################################################
     # add cwd for convenience and to make classes in this file available when
     # running as `python main.py`
     # (in particular `main.DataModuleFromConfig`)
@@ -840,7 +843,10 @@ if __name__ == "__main__":
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
         print("Model is on device:", next(model.parameters()).device) # Checking if the model is on CPU or GPU
-
+        #############################################
+        print("Memory usage after loading the model:")
+        print(torch.cuda.memory_summary())
+        #############################################
         # data
         data = instantiate_from_config(config.data)
         # NOTE according to https://pytorch-lightning.readthedocs.io/en/latest/datamodules.html
