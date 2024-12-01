@@ -839,6 +839,7 @@ if __name__ == "__main__":
 
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
+        print("Model is on device:", next(model.parameters()).device) # Checking if the model is on CPU or GPU
 
         # data
         data = instantiate_from_config(config.data)
