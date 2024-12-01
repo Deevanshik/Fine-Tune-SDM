@@ -840,7 +840,9 @@ if __name__ == "__main__":
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
         print("Model is on device:", next(model.parameters()).device) # Checking if the model is on CPU or GPU
-        print(trainer_opt) ## Checking the trainer opt
+        trainer.model.to('cuda')  # Move model to GPUs manually
+        print("After moving to cuda, Model is on device:", next(trainer.model.parameters()).device) ## Manually  moving the model to the gpu
+
 
         # data
         data = instantiate_from_config(config.data)
