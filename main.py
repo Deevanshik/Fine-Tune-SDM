@@ -670,7 +670,7 @@ if __name__ == "__main__":
 
         # model
         model = instantiate_from_config(config.model)
-        model.cpu()
+        model.cuda()
 
         if not opt.finetune_from == "":
             rank_zero_print(f"Attempting to load state from {opt.finetune_from}")
