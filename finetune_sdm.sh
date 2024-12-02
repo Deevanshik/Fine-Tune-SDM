@@ -1,7 +1,7 @@
 python main.py \
     -t \
     --base coco_base.yaml \
-    --gpus 1 \
+    --gpus 0,1 \
     --scale_lr False \
     --num_nodes 1 \
     --check_val_every_n_epoch 1 \
