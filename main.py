@@ -667,7 +667,9 @@ if __name__ == "__main__":
         trainer_config["accelerator"] = "ddp"
         print("trainer_config: ", trainer_config)
         for k in nondefault_trainer_args(opt):
+            print("Inside the for loop, opt is: ", opt)
             trainer_config[k] = getattr(opt, k)
+        print("after the for loop, the trainer config is: ", trainer_config)
         if not "gpus" in trainer_config:
             print("Inside the if statement")
             del trainer_config["accelerator"]
