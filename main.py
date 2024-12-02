@@ -673,8 +673,12 @@ if __name__ == "__main__":
 
         # model
         model = instantiate_from_config(config.model)
+<<<<<<< HEAD
         model.cuda()
         torch.cuda.empty_cache()
+=======
+        model.cpu()
+>>>>>>> parent of 3fb5659 (changed the model.cpu to model.cuda in line 673)
 
         if not opt.finetune_from == "":
             rank_zero_print(f"Attempting to load state from {opt.finetune_from}")
