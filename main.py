@@ -653,13 +653,19 @@ if __name__ == "__main__":
     try:
         # init and save configs
         configs = [OmegaConf.load(cfg) for cfg in opt.base]
+        print("configs: ", configs)
         cli = OmegaConf.from_dotlist(unknown)
+        print("cli: ", cli)
         config = OmegaConf.merge(*configs, cli)
+        print("config: ", config)
         lightning_config = config.pop("lightning", OmegaConf.create())
+        print("lightning_config: ", lightning_config)
         # merge trainer cli with config
         trainer_config = lightning_config.get("trainer", OmegaConf.create())
+        print("trainer_config: ", trainer_config)
         # default to ddp
         trainer_config["accelerator"] = "ddp"
+        print("trainer_config: ", trainer_config)
         for k in nondefault_trainer_args(opt):
             trainer_config[k] = getattr(opt, k)
         if not "gpus" in trainer_config:
@@ -669,11 +675,17 @@ if __name__ == "__main__":
             gpuinfo = trainer_config["gpus"]
             rank_zero_print(f"Running on GPUs {gpuinfo}")
             cpu = False
+        print("After loops at line 669, trainer_config: ", trainer_config)
         trainer_opt = argparse.Namespace(**trainer_config)
+        print("trainer_opt: ", trainer_opt)
         lightning_config.trainer = trainer_config
-
+        print("lightning_config at line 682: ", lightning_config)
+        
         # model
         model = instantiate_from_config(config.model)
+        print("model is: ", model)
+        ####
+        print("Before running model.cpu(), model is no device: ", next(model.parameters()).device)
         model.cpu()
         
         if not opt.finetune_from == "":
