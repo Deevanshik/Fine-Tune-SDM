@@ -917,7 +917,6 @@ if __name__ == "__main__":
         # run
         if opt.train:
             try:
-                model.enable_gradient_checkpointing()
                 trainer.fit(model, data)
                 # Clear unused GPU memory after training
                 torch.cuda.empty_cache()
