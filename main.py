@@ -917,6 +917,8 @@ if __name__ == "__main__":
         if opt.train:
             try:
                 trainer.fit(model, data)
+                # Clear unused GPU memory after training
+                torch.cuda.empty_cache()
             except Exception:
                 if not opt.debug:
                     melk()
