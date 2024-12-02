@@ -674,6 +674,7 @@ if __name__ == "__main__":
         # model
         model = instantiate_from_config(config.model)
         model.cuda()
+        torch.cuda.empty_cache()
 
         if not opt.finetune_from == "":
             rank_zero_print(f"Attempting to load state from {opt.finetune_from}")
@@ -916,6 +917,7 @@ if __name__ == "__main__":
         # run
         if opt.train:
             try:
+                model.enable_gradient_checkpointing()
                 trainer.fit(model, data)
                 # Clear unused GPU memory after training
                 torch.cuda.empty_cache()
